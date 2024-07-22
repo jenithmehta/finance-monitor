@@ -1,0 +1,38 @@
+{
+    "editor.tabSize": 4,
+    "editor.wordWrap": "on",
+    "editor.insertSpaces": true,
+    "editor.wrappingIndent": "indent",
+    "editor.trimAutoWhitespace": true,
+    "python.analysis.completeFunctionParens": true,
+    "python.languageServer": "Pylance",
+    "python.analysis.typeCheckingMode": "strict",
+    "python.analysis.inlayHints.functionReturnTypes": true,
+    "python.analysis.inlayHints.variableTypes": true,
+    "python.analysis.diagnosticSeverityOverrides": {
+      "reportUnusedImport": "information",
+      "reportMissingTypeStubs": "warning",
+      "reportUnknownVariableType": "warning",
+      "reportUnknownMemberType": "warning",
+      "reportUntypedFunctionDecorator": "warning",
+      "reportUnknownParameterType": "warning",
+      "reportUnknownArgumentType": "warning",
+      "reportUnknownLambdaType": "warning",
+      "reportFunctionMemberAccess": "warning"
+    },
+    "python.analysis.diagnosticMode": "openFilesOnly",
+    "python.analysis.stubPath": "./typings",
+    "[python]": {
+      "editor.defaultFormatter": "ms-python.black-formatter",
+    //   "editor.defaultFormatter": "charliermarsh.ruff",
+      "editor.formatOnSave": true,
+      "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+      },
+    },
+    "isort.args": [
+      "--profile",
+      "black"
+    ],
+  }
+  
