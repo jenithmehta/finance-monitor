@@ -49,15 +49,15 @@ def create_app():
             db.session.add(stat)
             db.session.commit()
 
-    from .views.admin import admin
-    from .views.auth import auth
-    from .views.home import home
-    from .views.settings import settings
+    from app.views.admin import admin
+    from app.views.auth import auth
+    from app.views.home import home
+    from app.views.settings import settings
 
     # request.blueprint != admin.name and
     blueprints = [auth, home, settings, admin]
     for bp in blueprints:
         app.register_blueprint(bp)
 
-    app.cli.add_command(create_admin_user)
+    # app.cli.add_command(create_admin_user)
     return app

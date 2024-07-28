@@ -10,7 +10,7 @@ from functools import wraps
 
 from flask import redirect, session, url_for
 
-from app.db import User
+from app.db import User, Statements
 
 
 def is_user_loggedin():
@@ -85,3 +85,15 @@ def admin_login_required(f):  # type:ignore
         return redirect(url_for("Admin.admin_login"))
 
     return fun  # type:ignore
+
+
+def get_current_user():
+    session_idbase64 = session.get("session-sign-id", "")
+    session_id = decodebase64(session_idbase64)
+    user_details = User.query.filter(User.session_id == session_id).first_or_404(
+        "User not found"
+    )
+    return user_details
+
+def get_current_user_balance()
+    balance = Statements.query
