@@ -9,8 +9,9 @@ import uuid
 from functools import wraps
 
 from flask import redirect, session, url_for
+from sqlalchemy import func
 
-from app.db import User, Statements
+from app.db import Statements, User
 
 
 def is_user_loggedin():
@@ -95,5 +96,12 @@ def get_current_user():
     )
     return user_details
 
-def get_current_user_balance()
-    balance = Statements.query
+
+def get_current_user_balance():
+    user_id = get_current_user().id
+    balance = (
+        Statements.query.with_entities(func.sum(Statements.amount))
+        .filter(Statements.user_id == user_id)
+        .first()[0]  # type: ignore
+    )
+    return balance if balance else 0.0
