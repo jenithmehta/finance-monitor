@@ -4,10 +4,10 @@
 
 Features:
 
-> User can create an account
-> Add credit & debit transactions
-> View statement
+> User can create an account <br>
+> Add credit & debit transactions <br>
+> View statement <be>
 
-Key concepts: Flask, ORM, Js, HTML
-Authentication: Base64 and UUID
-Database: Sqlite3 and Sqlalchemy
+Key concepts: Flask, ORM, Js, HTML <br>
+Authentication: Base64 and UUID <br>
+Database: Sqlite3 and Sqlalchemy <br>
