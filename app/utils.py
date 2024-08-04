@@ -11,7 +11,7 @@ from functools import wraps
 from flask import redirect, session, url_for
 from sqlalchemy import func
 
-from app.db import Statements, User
+from app.db import Statements, User, db
 
 
 def is_user_loggedin():
@@ -100,8 +100,10 @@ def get_current_user():
 def get_current_user_balance():
     user_id = get_current_user().id
     balance = (
-        Statements.query.with_entities(func.sum(Statements.amount))
+        db.session.query(
+            Statements.user_id, func.sum(Statements.amount).label("total_amount")
+        )
         .filter(Statements.user_id == user_id)
-        .first()[0]  # type: ignore
+        .first()
     )
-    return balance if balance else 0.0
+    return balance.total_amount if balance else 0.00

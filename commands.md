@@ -14,3 +14,11 @@ Q. what is **uuid**?
 > it is made to uniquely identify object in code
 > it is made out of timestamp and mac address
 > hexadecimal characters are numberic+alphabetic representation of bits. 1 byte = 2 hex chracters
+
+Q. what is all() method in **sqlalchemy**?
+
+> all() gives the result as a list
+> all is memory intensive
+> query object is iterative
+> for group by operations one() or first() can be used
+> if more results are expected, just loop through the results to avoid memory surge
