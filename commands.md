@@ -22,3 +22,7 @@ Q. what is all() method in **sqlalchemy**?
 > query object is iterative
 > for group by operations one() or first() can be used
 > if more results are expected, just loop through the results to avoid memory surge
+
+NOTE: Bug in how passwords are hashed and stored and later checked. script auth.py
+
+> solution: find ways to hash passwords in flask applications and later check them

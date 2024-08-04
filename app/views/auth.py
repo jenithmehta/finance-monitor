@@ -3,7 +3,12 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from app.db import User, db
 from app.forms import AuthForm
-from app.utils import generate_id, get_base64_encode, is_user_loggedin
+from app.utils import (
+    generate_id,
+    get_base64_encode,
+    is_user_loggedin,
+    user_login_required,
+)
 
 # TODO: add signup page
 
@@ -24,6 +29,8 @@ def auth_index():
         data = User.query.filter(User.email == email).first()
 
         if data:
+            print(data.password)
+            print(generate_password_hash(password))
             if check_password_hash(data.password, password) is True:
                 session.permanent = True
                 session["session-sign-id"] = get_base64_encode(data.session_id)
@@ -31,7 +38,8 @@ def auth_index():
             else:
                 flash("Incorrect password for entered email account!", "red")
         else:
-            hashed_password = generate_password_hash(password, "SHA256")
+            # hashed_password = generate_password_hash(password, method="SHA256")
+            hashed_password = generate_password_hash(password)
             name = email.split("@")[0][:18]
             user = User(  # type: ignore
                 name=name,

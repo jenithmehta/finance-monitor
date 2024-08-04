@@ -90,7 +90,9 @@ def admin_login_required(f):  # type:ignore
 
 def get_current_user():
     session_idbase64 = session.get("session-sign-id", "")
+    print(session_idbase64)
     session_id = decodebase64(session_idbase64)
+    print(session_id)
     user_details = User.query.filter(User.session_id == session_id).first_or_404(
         "User not found"
     )
