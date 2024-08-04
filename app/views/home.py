@@ -23,4 +23,23 @@ home = Blueprint("Home", __name__)
 @user_login_required
 def home_index():
     user = get_current_user()
-    return user
+    user_details = {}
+    user_details["name"] = user.name
+    user_details["account_balance"] = round(get_current_user_balance(), 2)
+    statements = (
+        db.session.query(Statements)
+        .filter(Statements.user_id == 1)
+        .order_by(Statements.operation_time.desc())
+        .limit(5)
+        .all()
+    )
+    user_details["statements"] = [
+        {
+            "desc": res.description,
+            "amount": res.amount,
+            "at": res.operation_time,
+            "id": res.statement_id,
+        }
+        for res in statements
+    ]
+    return render_template("home/index.html", user=user_details)
