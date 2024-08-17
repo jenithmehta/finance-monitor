@@ -29,11 +29,9 @@ def auth_index():
         data = User.query.filter(User.email == email).first()
 
         if data:
-            print(data.password)
-            print(generate_password_hash(password))
             if check_password_hash(data.password, password) is True:
-                session.permanent = True
                 session["session-sign-id"] = get_base64_encode(data.session_id)
+                session.permanent = True
                 return redirect(url_for("Home.home_index"))
             else:
                 flash("Incorrect password for entered email account!", "red")

@@ -43,3 +43,43 @@ def home_index():
         for res in statements
     ]
     return render_template("home/index.html", user=user_details)
+
+
+@home.route("/new", methods=("GET", "POST"))
+@user_login_required
+def new_statement():
+    form = NewStatementForm(request.form)
+    if form.validate_on_submit():
+        amount = form.amount.data
+        description = form.description.data
+        at = form.datetime_data.data
+        income = form.income.data
+        expense = form.expense.data
+
+        if not income and not expense:
+            flash("Cannot add statement that is neither income nor expense!", "red")
+            return redirect(url_for(".new_statement"))
+
+        amount = abs(amount)
+        if expense is True:
+            amount = -amount
+
+        current_user = get_current_user()
+        user_id = current_user.id
+
+        statement = Statements(
+            description=description,
+            amount=amount,
+            operation_time=at,
+            user_id=user_id,
+            statement_id=generate_string(),
+        )
+
+        db.session.add(statement)
+        db.session.commit()
+
+        flash("Statement was added to your account successfully.", "green")
+        return redirect(url_for("Home.home_index"))
+
+    return render_template("home/new_statement.html", title="New statement", form=form)
+

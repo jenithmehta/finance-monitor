@@ -26,7 +26,10 @@ def is_user_loggedin():
                 user = User.query.filter(User.session_id == sessionid_decode).first()
                 if user:
                     login = True
-                session.pop("session-sign-id")
+                    return login
+                session.pop(
+                    "session-sign-id"
+                )  # if user is not found, remove session-sign-id as it will redirect to login page
         return login
 
 
@@ -90,9 +93,7 @@ def admin_login_required(f):  # type:ignore
 
 def get_current_user():
     session_idbase64 = session.get("session-sign-id", "")
-    print(session_idbase64)
     session_id = decodebase64(session_idbase64)
-    print(session_id)
     user_details = User.query.filter(User.session_id == session_id).first_or_404(
         "User not found"
     )
